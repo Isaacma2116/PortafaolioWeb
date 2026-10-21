@@ -5,5 +5,6 @@ export function scrollToSection(id) {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
   el.focus({ preventScroll: true })
-  history.replaceState(null, '', `#${id}`)
+  // Ruta siempre en la raíz: deja la URL limpia como /#seccion.
+  history.replaceState(null, '', `/#${id}`)
 }

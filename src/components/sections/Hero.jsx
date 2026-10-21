@@ -14,6 +14,18 @@ export default function Hero({ onNavigate, solar }) {
       className="section flex min-h-[100svh] scroll-mt-20 flex-col justify-center pb-16 pt-28 outline-none"
     >
       <Reveal>
+        {profile.photo && (
+          <div className="mb-6 size-28 overflow-hidden rounded-full ring-2 ring-sky-300/50 ring-offset-4 ring-offset-transparent shadow-[0_0_40px_-6px_rgba(125,211,252,.55)] sm:size-32">
+            {/* La imagen se amplía un poco para ocultar el aro que trae la foto original del CV. */}
+            <img
+              src={profile.photo}
+              alt={`Foto de ${profile.name}`}
+              width="346"
+              height="346"
+              className="size-full scale-110 object-cover"
+            />
+          </div>
+        )}
         <p className="eyebrow mb-5">
           <span className="mr-2 inline-block size-1.5 rounded-full bg-amber-300 align-middle shadow-[0_0_10px_2px_rgba(252,211,77,.6)]" />
           Portafolio profesional

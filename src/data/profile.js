@@ -5,6 +5,7 @@ export const profile = {
   location: 'Aguascalientes, México',
   summary:
     'Ingeniero en Desarrollo y Gestión de Software con experiencia en desarrollo de aplicaciones internas, soporte técnico e infraestructura TI: redes, sistemas GPS y RFID, videovigilancia y automatización de procesos operativos.',
+  photo: '/img/foto-perfil.jpg',
   email: 'macias.jose.1hv@gmail.com',
   linkedin: 'https://www.linkedin.com/in/jose-isaac-macias-927442440/',
   linkedinLabel: 'linkedin.com/in/jose-isaac-macias-927442440',
