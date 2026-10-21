@@ -1,0 +1,697 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-[#030712] font-sans text-slate-200 antialiased;
+    min-height: 100vh;
+  }
+  ::selection {
+    background: rgb(56 189 248 / 0.35);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid #7dd3fc;
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  code {
+    @apply rounded bg-white/5 px-1 py-0.5 text-[0.85em] text-sky-200;
+  }
+}
+
+/* ───────────────────────── Componentes ───────────────────────── */
+@layer components {
+  .skip-link {
+    @apply absolute left-4 top-3 z-[60] -translate-y-20 rounded-md bg-sky-300 px-3 py-2 text-sm font-semibold text-slate-950 transition-transform;
+  }
+  .skip-link:focus {
+    @apply translate-y-0;
+  }
+
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80;
+  }
+
+  .panel {
+    @apply rounded-2xl border border-white/[0.08] bg-[#0a1124]/70 backdrop-blur-sm;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.04),
+      0 20px 40px -24px rgb(0 0 0 / 0.6);
+  }
+  .panel-hover {
+    @apply transition-[border-color,background-color,transform] duration-300;
+  }
+  .panel-hover:hover {
+    @apply -translate-y-0.5 border-sky-300/20 bg-[#0c1530]/80;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm text-slate-200;
+  }
+  .chip-sm {
+    @apply px-2.5 py-0.5 text-xs;
+  }
+  .chip-pending {
+    @apply border-dashed border-amber-300/30 text-amber-200/80;
+  }
+
+  .btn {
+    @apply inline-flex h-12 items-center justify-center gap-2 rounded-xl px-5 text-[15px] font-medium transition-[background-color,border-color,box-shadow,transform] duration-200 active:scale-[0.98];
+  }
+  .btn-primary {
+    @apply bg-sky-300 text-slate-950 hover:bg-sky-200;
+    box-shadow: 0 0 0 1px rgb(186 230 253 / 0.4), 0 8px 30px -10px rgb(56 189 248 / 0.7);
+  }
+  .btn-ghost {
+    @apply border border-white/15 bg-white/[0.03] text-slate-100 hover:border-sky-200/40 hover:bg-white/[0.07];
+  }
+
+  .link {
+    @apply text-sky-200 underline decoration-sky-200/30 underline-offset-4 transition-colors hover:text-white hover:decoration-sky-200;
+  }
+
+  .nav-link {
+    @apply relative block rounded-md px-2.5 py-2 text-[13px] text-slate-400 transition-colors hover:text-white;
+  }
+  .nav-link.is-active {
+    @apply text-white;
+  }
+  .nav-link.is-active::after {
+    content: '';
+    @apply absolute inset-x-2.5 -bottom-0.5 h-px bg-gradient-to-r from-transparent via-sky-300 to-transparent;
+  }
+
+  .mobile-menu {
+    @apply bg-[#030712]/95;
+    animation: fade-down 0.2s ease-out;
+  }
+
+  .icon-tile {
+    @apply inline-flex size-11 shrink-0 items-center justify-center rounded-xl border;
+  }
+  .icon-tile--mars {
+    @apply border-orange-300/20 bg-orange-400/10 text-orange-200;
+  }
+  .icon-tile--jupiter {
+    @apply border-amber-200/20 bg-amber-300/10 text-amber-100;
+  }
+  .icon-tile--uranus {
+    @apply border-cyan-200/20 bg-cyan-300/10 text-cyan-100;
+  }
+  .icon-tile--neptune {
+    @apply border-blue-300/20 bg-blue-400/10 text-blue-200;
+  }
+
+  .ring-panel {
+    background-image: radial-gradient(120% 60% at 100% 0%, rgb(253 230 138 / 0.06), transparent 60%);
+  }
+
+  .pending {
+    @apply rounded-lg border border-dashed border-amber-300/25 bg-amber-300/[0.04] px-3 py-2 text-sm text-amber-100/80;
+  }
+  .screenshot-slot {
+    @apply flex aspect-video flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-white/15 text-xs text-slate-500;
+  }
+
+  /* Línea de tiempo */
+  .timeline {
+    @apply relative space-y-6 pl-8 md:pl-10;
+  }
+  .timeline::before {
+    content: '';
+    @apply absolute bottom-2 left-3 top-2 w-px bg-gradient-to-b from-amber-200/50 via-sky-300/30 to-transparent md:left-4;
+  }
+  .timeline-item {
+    @apply relative;
+  }
+  .timeline-dot {
+    @apply absolute -left-8 top-6 flex size-6 items-center justify-center rounded-full border border-amber-200/40 bg-[#0a1124] text-amber-100 md:-left-10 md:size-8;
+    box-shadow: 0 0 16px rgb(251 191 36 / 0.25);
+  }
+
+  /* Tarjetas de proyecto */
+  .project-illustration {
+    @apply relative flex h-full w-full items-center justify-center overflow-hidden bg-[#0a1124];
+  }
+  .project-orbit {
+    @apply absolute aspect-square w-[46%] rounded-full border border-white/15;
+    transform: scaleY(0.42);
+  }
+  .project-orbit--2 {
+    @apply w-[78%] border-white/[0.08];
+  }
+  .project-core {
+    @apply relative flex size-16 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur;
+    box-shadow: 0 0 40px rgb(125 211 252 / 0.25);
+  }
+
+  /* Diálogo de detalle */
+  .project-dialog {
+    @apply m-auto max-h-[90vh] w-[min(56rem,calc(100%-2rem))] overflow-y-auto rounded-2xl border border-white/10 bg-[#070d1f] text-slate-200 shadow-2xl;
+  }
+  .project-dialog[open] {
+    animation: dialog-in 0.25s ease-out;
+  }
+  .project-dialog::backdrop {
+    background: rgb(2 6 23 / 0.75);
+    backdrop-filter: blur(4px);
+  }
+
+  /* Leyenda bajo el sistema solar */
+  .legend-chip {
+    @apply flex min-h-11 w-full items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-2.5 text-xs text-slate-300 transition-colors hover:border-sky-200/30 hover:text-white;
+  }
+  .legend-chip.is-active {
+    @apply border-sky-300/50 bg-sky-300/10 text-white;
+  }
+  .legend-dot {
+    @apply size-3.5 shrink-0;
+  }
+
+  /* Carril de planetas (tablet) */
+  .rail-btn {
+    @apply relative flex size-10 items-center justify-center rounded-full transition-colors hover:bg-white/10;
+  }
+  .rail-btn.is-active {
+    @apply bg-white/10;
+  }
+  .rail-dot {
+    @apply size-3.5 transition-transform duration-300;
+  }
+  .rail-btn.is-active .rail-dot {
+    transform: scale(1.5);
+    filter: drop-shadow(0 0 6px rgb(186 230 253 / 0.8));
+  }
+  .rail-tip {
+    @apply pointer-events-none absolute right-12 whitespace-nowrap rounded-md border border-white/10 bg-[#070d1f] px-2 py-1 text-xs text-slate-200 opacity-0 transition-opacity;
+  }
+  .rail-btn:hover .rail-tip,
+  .rail-btn:focus-visible .rail-tip {
+    @apply opacity-100;
+  }
+
+  .section-planet {
+    @apply size-12 md:size-14;
+    filter: drop-shadow(0 0 18px rgb(125 211 252 / 0.25));
+  }
+}
+
+/* ───────────────────────── Aparición de secciones ───────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ───────────────────────── Fondo espacial ───────────────────────── */
+.space-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 30% 40%, #0b1533 0%, transparent 70%),
+    linear-gradient(180deg, #030712 0%, #050b1d 50%, #030712 100%);
+}
+.nebula {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.55;
+  will-change: transform;
+}
+.nebula--blue {
+  width: 70vw;
+  height: 60vh;
+  left: -15vw;
+  top: 5vh;
+  background: radial-gradient(closest-side, rgb(37 99 235 / 0.22), transparent);
+  animation: drift 40s ease-in-out infinite alternate;
+}
+.nebula--violet {
+  width: 60vw;
+  height: 70vh;
+  right: -20vw;
+  top: 30vh;
+  background: radial-gradient(closest-side, rgb(124 58 237 / 0.2), transparent);
+  animation: drift 52s ease-in-out infinite alternate-reverse;
+}
+.nebula--teal {
+  width: 45vw;
+  height: 40vh;
+  left: 25vw;
+  bottom: -15vh;
+  background: radial-gradient(closest-side, rgb(14 165 233 / 0.12), transparent);
+}
+.star-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+.star-layer--b {
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+.star-layer--c {
+  animation: twinkle 9s ease-in-out infinite alternate-reverse;
+}
+.glint {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgb(191 219 254 / 0.8);
+  transform: scale(var(--s));
+  animation: glint 8s ease-in-out infinite;
+}
+.glint::before,
+.glint::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.8), transparent);
+  translate: -50% -50%;
+}
+.glint::before {
+  width: 18px;
+  height: 1px;
+}
+.glint::after {
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(180deg, transparent, rgb(255 255 255 / 0.8), transparent);
+}
+.shooting-star {
+  position: absolute;
+  top: 12%;
+  left: 60%;
+  width: 140px;
+  height: 1px;
+  background: linear-gradient(90deg, rgb(255 255 255 / 0.9), transparent);
+  opacity: 0;
+  transform: rotate(-20deg);
+  animation: shoot 14s ease-in 4s infinite;
+}
+.space-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgb(2 6 23 / 0.7) 100%);
+}
+
+/* ───────────────────────── Sistema solar ───────────────────────── */
+.solar {
+  --tilt: 0.45;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 0.62;
+  container-type: inline-size;
+  contain: layout;
+}
+/* Plano orbital cuadrado, aplastado en Y para dar perspectiva (órbitas elípticas). */
+.solar-plane {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100cqw;
+  height: 100cqw;
+  margin-top: -50cqw;
+  transform: scaleY(var(--tilt));
+}
+.orbit-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--orbit) * 2);
+  height: calc(var(--orbit) * 2);
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 1.5px solid rgb(148 197 255 / 0.13);
+  transition:
+    border-color 0.4s,
+    box-shadow 0.4s;
+}
+.orbit-ring.is-active {
+  border-color: rgb(186 230 253 / 0.45);
+  box-shadow: 0 0 24px rgb(56 189 248 / 0.18);
+}
+.orbit-arm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  animation: orbit-spin var(--dur) linear infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+.orbit-carrier {
+  position: absolute;
+  transform: translateX(var(--orbit));
+}
+.orbit-counter {
+  position: absolute;
+  animation: orbit-counter var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+.planet-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  translate: -50% -50%;
+  display: grid;
+  place-items: center;
+  width: max(30px, calc(var(--size) + 12px));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.planet-visual {
+  position: relative;
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  transition:
+    transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.4s;
+}
+.planet-visual .planet-body {
+  position: absolute;
+  inset: 0;
+}
+/* Sombra que gira con la órbita: el lado oscuro siempre mira lejos del Sol. */
+.planet-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(90deg, rgb(255 255 255 / 0.1), transparent 40%, rgb(2 6 23 / 0.75) 92%);
+  animation: orbit-spin var(--dur) linear infinite;
+  animation-delay: var(--delay);
+}
+.planet-btn:hover .planet-visual,
+.planet-btn:focus-visible .planet-visual,
+.planet-btn.is-active .planet-visual {
+  transform: scale(1.4);
+  filter: brightness(1.2) drop-shadow(0 0 10px rgb(186 230 253 / 0.55));
+}
+.planet-label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 2px;
+  white-space: nowrap;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #e2e8f0;
+  background: rgb(7 13 31 / 0.85);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  z-index: 2;
+}
+.planet-label strong {
+  color: #bae6fd;
+  font-weight: 600;
+}
+.planet-btn:hover .planet-label,
+.planet-btn:focus-visible .planet-label,
+.planet-btn.is-active .planet-label {
+  opacity: 1;
+}
+.planet-btn:hover,
+.planet-btn:focus-visible {
+  z-index: 3;
+}
+
+/* Pausar las órbitas al explorar con el ratón o el teclado para facilitar el clic. */
+.solar:hover :is(.orbit-arm, .orbit-counter, .planet-shade),
+.solar:focus-within :is(.orbit-arm, .orbit-counter, .planet-shade),
+.solar[data-static] :is(.orbit-arm, .orbit-counter, .planet-shade) {
+  animation-play-state: paused;
+}
+
+.sun-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: max(44px, 10cqw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1;
+}
+.sun-btn .planet-body {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s, filter 0.4s;
+}
+.sun-btn:hover .planet-body,
+.sun-btn.is-active .planet-body {
+  transform: scale(1.06);
+  filter: brightness(1.1);
+}
+.sun-corona {
+  position: absolute;
+  inset: -45%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(251 191 36 / 0.45), rgb(249 115 22 / 0.15) 55%, transparent);
+  animation: corona 6s ease-in-out infinite;
+}
+
+/* ───────────────────────── Texturas de planetas ───────────────────────── */
+.planet-body {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+/* Volumen estático (luz superior izquierda). */
+.planet-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 30%, rgb(255 255 255 / 0.18), transparent 38%, rgb(0 0 0 / 0.35) 85%);
+}
+.skin-sun {
+  background: radial-gradient(circle at 42% 40%, #fffbeb 0%, #fde68a 22%, #f59e0b 58%, #ea580c 88%);
+  box-shadow:
+    0 0 30px 6px rgb(251 191 36 / 0.45),
+    0 0 80px 20px rgb(249 115 22 / 0.18);
+}
+.skin-sun::after {
+  background: radial-gradient(circle at 35% 35%, rgb(255 255 255 / 0.3), transparent 50%);
+}
+.skin-mercury {
+  background:
+    radial-gradient(circle at 65% 60%, #78716c 0 9%, transparent 10%),
+    radial-gradient(circle at 35% 70%, #78716c 0 7%, transparent 8%),
+    radial-gradient(circle at 40% 35%, #d6d3d1, #a8a29e 50%, #57534e);
+}
+.skin-venus {
+  background:
+    linear-gradient(160deg, transparent 30%, rgb(255 255 255 / 0.15) 45%, transparent 60%),
+    radial-gradient(circle at 40% 35%, #fef3c7, #fbbf24 45%, #b45309);
+}
+.skin-earth {
+  background:
+    radial-gradient(circle at 62% 38%, #4ade80 0 16%, transparent 17%),
+    radial-gradient(circle at 35% 66%, #22c55e 0 13%, transparent 14%),
+    radial-gradient(ellipse 60% 18% at 50% 6%, #f1f5f9 0 60%, transparent 62%),
+    radial-gradient(circle at 40% 40%, #60a5fa, #2563eb 55%, #1e3a8a);
+  box-shadow: 0 0 10px rgb(96 165 250 / 0.45);
+}
+.skin-mars {
+  background:
+    radial-gradient(circle at 60% 55%, #9a3412 0 12%, transparent 13%),
+    radial-gradient(circle at 40% 35%, #fdba74, #ea580c 50%, #7c2d12);
+}
+.skin-jupiter {
+  background:
+    radial-gradient(ellipse 18% 11% at 64% 64%, #c2410c 0 70%, transparent 75%),
+    linear-gradient(
+      180deg,
+      #f5deb3 0 12%,
+      #c08457 12% 21%,
+      #fde7c7 21% 33%,
+      #b45309 33% 40%,
+      #f3d9b1 40% 56%,
+      #c2410c 56% 62%,
+      #e7c9a0 62% 77%,
+      #a16207 77% 85%,
+      #f5deb3 85%
+    );
+}
+.skin-saturn {
+  background: linear-gradient(180deg, #fef3c7 0 18%, #e7c48a 18% 32%, #fde68a 32% 52%, #d6a85c 52% 64%, #fef3c7 64% 80%, #caa060 80%);
+}
+.saturn-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 230%;
+  height: 230%;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, transparent 58%, rgb(253 230 138 / 0.65) 60%, rgb(214 168 92 / 0.4) 74%, rgb(253 230 138 / 0.5) 80%, transparent 82%);
+  transform: translate(-50%, -50%) rotate(-18deg) scaleY(0.3);
+  pointer-events: none;
+}
+.skin-uranus {
+  background: radial-gradient(circle at 40% 35%, #ecfeff, #67e8f9 45%, #0e7490);
+  box-shadow: 0 0 10px rgb(103 232 249 / 0.35);
+}
+.skin-neptune {
+  background:
+    radial-gradient(ellipse 22% 12% at 60% 40%, #1e3a8a 0 70%, transparent 75%),
+    radial-gradient(circle at 40% 35%, #bfdbfe, #3b82f6 50%, #1e3a8a);
+  box-shadow: 0 0 10px rgb(59 130 246 / 0.4);
+}
+
+/* ───────────────────────── Keyframes ───────────────────────── */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes orbit-counter {
+  from {
+    transform: rotate(0deg) scaleY(calc(1 / var(--tilt)));
+  }
+  to {
+    transform: rotate(-360deg) scaleY(calc(1 / var(--tilt)));
+  }
+}
+@keyframes corona {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+}
+@keyframes twinkle {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.35;
+  }
+}
+@keyframes glint {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes drift {
+  to {
+    transform: translate3d(4vw, 3vh, 0) scale(1.08);
+  }
+}
+@keyframes shoot {
+  0% {
+    opacity: 0;
+    transform: rotate(-20deg) translateX(0);
+  }
+  2% {
+    opacity: 1;
+  }
+  7% {
+    opacity: 0;
+    transform: rotate(-20deg) translateX(-45vw);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(-20deg) translateX(-45vw);
+  }
+}
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+
+/* ───────────────────────── Móvil: menos efectos ───────────────────────── */
+@media (max-width: 767px) {
+  .nebula {
+    animation: none;
+  }
+  .shooting-star {
+    display: none;
+  }
+  .star-layer--c {
+    animation: none;
+  }
+}
+
+/* ───────────────────────── Movimiento reducido ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  /* Las órbitas se pausan (no se eliminan) para conservar la posición de cada planeta. */
+  .orbit-arm,
+  .orbit-counter,
+  .planet-shade {
+    animation-play-state: paused !important;
+  }
+  .nebula,
+  .star-layer,
+  .glint,
+  .sun-corona,
+  .shooting-star,
+  .mobile-menu,
+  .project-dialog[open] {
+    animation: none !important;
+  }
+  .shooting-star {
+    display: none;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
